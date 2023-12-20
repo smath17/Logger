@@ -1,6 +1,6 @@
 ﻿namespace Logger.Core
 {
-    enum LogLevel
+    public enum LogLevel
     {
         Verbose,
         Debug,

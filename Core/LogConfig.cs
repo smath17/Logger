@@ -1,22 +1,24 @@
-﻿using System.Configuration;
+﻿using static Logger.Utility.ConfigReader;
 
 namespace Logger.Core
 {
     public class LogConfig
     {
-        string baseDir;
+        public readonly string baseDir;
+        public readonly List<string> outputs;
+        public readonly LogLevel minLogLevel;
 
         public LogConfig()
         {
-            if (ConfigurationManager.AppSettings.AllKeys.Contains("myKey"))
-            {
-                baseDir = ConfigurationManager.AppSettings["LogFilePath"];
-            }
-            else
-            {
-                // Key doesn't exist
-            }
+            // TODO: Throw exception if missing app.config
 
+            string logFilePathKey = "LogFilePath";
+            // Obtain settings from app.config
+            baseDir = ReadAppSetting(logFilePathKey, AppDomain.CurrentDomain.BaseDirectory + "\\Logs");
+
+            outputs = ReadAppSettings("LogOutputs", new List<string> { "console" });
+
+            Enum.TryParse(ReadAppSetting("MinLogLevel", "debug"), out minLogLevel);
         }
     }
 }
