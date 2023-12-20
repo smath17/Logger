@@ -13,6 +13,14 @@ namespace Logger.Core.LogOutputs
                 File.AppendAllText(path + @"\xml\" + DateTime.Now.ToString("yyyy_MM_dd_HH") + ".log", xmlEntry.ToString());
         }
 
+        public void WriteLogLevel(Log log)
+        {
+            XElement xmlEntry = new("logEntry",
+                new XElement("Level", log.Level),
+                new XElement("Date", DateTime.Now.ToString()));
+            File.AppendAllText(path + @"\xml\" + DateTime.Now.ToString("yyyy_MM_dd_HH") + ".log", xmlEntry.ToString());
+        }
+
         public void WriteLogEx(Log log)
         {
                 XElement xmlEntry = new("logEntry",
@@ -77,6 +85,10 @@ namespace Logger.Core.LogOutputs
             else if (log.Exception != null)
             {
                 WriteLogEx(log);
+            }
+            else
+            {
+                WriteLogLevel(log);
             }
         }
     }

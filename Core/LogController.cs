@@ -16,7 +16,7 @@ namespace Logger.Core
         private static readonly object _syncLock = new();
 
 
-        public static void Log(LogLevel level, string? message, Exception? ex)
+        public static void Log(LogLevel level, string message, Exception ex)
         {
             if (_backgroundLogWriter == null)
             {
@@ -27,7 +27,38 @@ namespace Logger.Core
             
         }
 
+        public static void Log(LogLevel level, string message)
+        {
+            if (_backgroundLogWriter == null)
+            {
+                StartLogging();
+            }
+            Log log = new(message, level);
+            _logQueue.Add(log);
 
+        }
+
+        public static void Log(LogLevel level, Exception? ex)
+        {
+            if (_backgroundLogWriter == null)
+            {
+                StartLogging();
+            }
+            Log log = new(ex, level);
+            _logQueue.Add(log);
+
+        }
+
+        public static void Log(LogLevel level)
+        {
+            if (_backgroundLogWriter == null)
+            {
+                StartLogging();
+            }
+            Log log = new(level);
+            _logQueue.Add(log);
+
+        }
 
         public static void StartLogging()
         {

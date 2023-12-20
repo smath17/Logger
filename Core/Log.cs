@@ -2,22 +2,27 @@
 {
     public class Log
     {
-        public Log(Exception? exception, LogLevel level)
+        public Log(Exception exception, LogLevel level)
         {
             Exception = exception;
             Level = level;
         }
 
-        public Log(string? message, LogLevel level)
+        public Log(string message, LogLevel level)
         {
             Message = message;
             Level = level;
         }
 
-        public Log(Exception? exception, string? message, LogLevel level)
+        public Log(Exception exception, string message, LogLevel level)
         {
             Exception = exception;
             Message = message;
+            Level = level;
+        }
+
+        public Log(LogLevel level)
+        {
             Level = level;
         }
 
